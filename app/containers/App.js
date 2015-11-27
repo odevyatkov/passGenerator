@@ -2,20 +2,19 @@ import React, { Component, PropTypes, View, Text, StyleSheet } from 'react-nativ
 import { connect } from 'react-redux/native';
 import { bindActionCreators } from 'redux';
 
-import * as GeneratorActions from '../actions/GeneratorActions';
+import { formChange } from '../actions/GeneratorActions';
 
 import GeneratorForm from '../components/GeneratorForm';
 
 class App extends Component {
   render() {
-    const { generator, dispatch } = this.props;
-    const generatorActions = bindActionCreators(GeneratorActions, dispatch);
+    const { generator, formChange } = this.props;
 
     return (
       <View style={styles.container}>
         <GeneratorForm
           form={generator.form}
-          onFormChange={generatorActions.formChange.bind(null)}
+          onFormChange={formChange.bind(null)}
         />
         <Text>Your pass: {generator.pass}</Text>
       </View>
@@ -25,7 +24,7 @@ class App extends Component {
 
 App.propTypes = {
   generator: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired
+  formChange: PropTypes.func.isRequired
 };
 
 const styles = StyleSheet.create({
@@ -47,4 +46,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, {
+  formChange
+})(App);

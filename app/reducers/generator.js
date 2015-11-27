@@ -30,7 +30,11 @@ export default function generator(state = initialState, action = {}) {
 }
 
 function generatePass(form) {
-  return hashCode('pass' + form.site + ':' + form.login + ':' + form.salt);
+  if (!form.salt) {
+    return '';
+  }
+
+  return hashCode(form.site + ':' + form.login + ':' + form.salt);
 }
 
 function hashCode(str) {
